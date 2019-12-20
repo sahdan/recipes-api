@@ -1,0 +1,439 @@
+{
+	"info": {
+		"_postman_id": "6fdc827d-a455-4e9a-ac7a-32c6cb7ed318",
+		"name": "Resep Makanan",
+		"description": "Collection for Resep Makanan API. Tugas B2B Web Services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Registrasi Akun",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"contributor3\",\r\n  \"password\": \"1234\",\r\n  \"fullname\": \"Contributor Three\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/user/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						},
+						"description": "Endpoints untuk registrasi akun. Data yang harus disubmit antara lain username, password, dan fullname"
+					},
+					"response": []
+				},
+				{
+					"name": "Login Akun",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"contributor3\",\r\n  \"password\": \"1234\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/user/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						},
+						"description": "Endpoint untuk melakukan login ke sistem menggunakan akun yang sudah teregistrasi sebelumnya. Data yang harus disubmit adalah username dan password. Jika sukses, maka akan mendapatkan token."
+					},
+					"response": []
+				}
+			],
+			"description": "Folder untuk endpoints yang berhubungan dengan user. \nEndpoints terdiri dari Registrasi dan Login.",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Resep",
+			"item": [
+				{
+					"name": "Cari Resep",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cuisine\": \"Thai\",\r\n  \"diet\": \"Vegan\",\r\n  \"excludeBahan\": \"peanut, wheat\",\r\n  \"alergi\": \"pork,wine,alcohol\",\r\n  \"jumlah\": 5,\r\n  \"tipe\": \"side dish\",\r\n  \"punyaInstruksi\": \"true\",\r\n  \"query\": \"noodle\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/resep/cari",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"resep",
+								"cari"
+							]
+						},
+						"description": "Request untuk mencari resep berdasarkan nama masakan di database 3rd party. Terdapat filter opsional seperti jenis masakan, diet, pengecualian bahan, alergi, jumlah, tipe, dan instruksi. Berguna untuk pengguna yang ingin membuat masakan tertentu. Data yang dikembalikan berupa array yang berisi berbagai resep."
+					},
+					"response": []
+				},
+				{
+					"name": "Cari Resep Mirip By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/resep/mirip/{resepId}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"resep",
+								"mirip",
+								"{resepId}"
+							]
+						},
+						"description": "Endpoint untuk mencari Resep yang mirip pada database 3rd party berdasarkan ID resep yang diinputkan. Data yang dikembalikan berupa id dan title resep"
+					},
+					"response": []
+				},
+				{
+					"name": "Cari Resep Acak",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"number\": 5,\r\n  \"tags\": \"noodle\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/resep/acak",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"resep",
+								"acak"
+							]
+						},
+						"description": "Endpoints untuk mendapatkan resep secara acak dari database 3rd party. Terdapat filter opsional berupa number of receipt yang ingin didapatkan dan tags dari receipt yang ingin didapatkan secara acak. Data yang dikembalikan berupa daftar resep yang berisi id dan title."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Resep Detail By Id ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/resep/detail/{resepId}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"resep",
+								"detail",
+								"{resepId}"
+							]
+						},
+						"description": "Endpoints untuk mendapatkan detail resep berdasarkan Id. Data yang dikembalikan berupa lengkap dengan Servings, Credit Text, Title, Ready in Minutes, Instructions, daftar ingredients, dan lain lain. Daftar Ingredients terdiri dari id, name, amount, unit, dan lain lain."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Daftar Bahan By Id Resep",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/resep/bahan/{resepId}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"resep",
+								"bahan",
+								"{resepId}"
+							]
+						},
+						"description": "Endpoint untuk mendapatkan daftar bahan/ingredients dari ID resep yang diinputkan. Data yang diterima berupa array daftar Ingredients terdiri dari id, name, amount, unit, dan lain lain."
+					},
+					"response": []
+				},
+				{
+					"name": "Cari Resep Lokal",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": \"Goreng\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/resep/cariLokal",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"resep",
+								"cariLokal"
+							]
+						},
+						"description": "Endpoint untuk mencari resep yang ada pada database lokal API. input berupa object jason berparameter query yang dituliskan di body request. Data yang dikembalikan berupa daftar resep lengkap dengan Servings, Credit Text, Title, Ready in Minutes, Instructions, daftar ingredients, dan lain lain. Daftar Ingredients terdiri dari id, name, amount, unit, dan lain lain."
+					},
+					"response": []
+				},
+				{
+					"name": "Tambah Resep",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"servings\": 4,\r\n    \"creditText\": \"TestCreditText\",\r\n    \"title\": \"Test Resep\",\r\n    \"readyInMinutes\": 20,\r\n    \"image\": \"https://selerasa.com/wp-content/uploads/2015/06/images_mie_mie-kwetiau_48-kwetiau-goreng-spesial.jpg\",\r\n    \"instructions\": \"Panaskan minyak goreng di atas wajan dengan menggunakan api sedang. Masukan bawang putih dan bawang bombay ke dalam wajan kemudian tumis bawang putih dan bawang bombay hingga harum. Masukkan secara berturut turut udang, ayam, bakso ikan dan bakso sapi ke dlam masakan anda kemudian aduk sampai udang dan ayam matang dan berubah warna. Jangan lupa untuk memasukan bumbu cair ke dalam masakan anda kemudian aduk sebentar saja. Ambil kwetiau kemudian masukan dalama wajan, setelah itu berturut-turut masukan daun bawang dan coysim, lalu aduk sampai semua bahan merata dan matang. Pecahkan telur di atas wajan kemudian orak arik telurnya, aduk kembali semua bahan hingga merata sebentar saja. Angkat kwetiau sepsial anda dari wajan, kemudian tata di atas piring saji yang sudah anda persiapkan. Taburkan sedikit bawang goreng di atasnya untuk melengkapi sajian anda, bagi anda yang suka bisa juga menambahkan acar saat menyajikan kwetiau goreng spesial ini. Sajikan selagi hangat agar terasa lebih nikmat.\\r\\n\\r\\nSumber: https://selerasa.com/resep-dan-cara-memasak-kwetiau-goreng-spesial-makanan-chinese-yang-sederhana-namun-enak | Selerasa.com\",\r\n    \"ingredients\": [\r\n        {\r\n            \"name\": \"Kecap Manis\",\r\n            \"amount\": 5,\r\n            \"unit\": \"Sdm\"\r\n        },\r\n        {\r\n            \"name\": \"Kecap Asin\",\r\n            \"amount\": 3,\r\n            \"unit\": \"Sdm\"\r\n        },\r\n        {\r\n            \"name\": \"Daun Bawang\",\r\n            \"amount\": 2,\r\n            \"unit\": \"Batang\"\r\n        },\r\n        {\r\n            \"name\": \"Telur Ayam\",\r\n            \"amount\": 2,\r\n            \"unit\": \"Butir\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/resep/tambah",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"resep",
+								"tambah"
+							]
+						},
+						"description": "Endpoint untuk menambah resep di database.\nData resep yang harus dimasukkan antara lain:\nServings, Credit Text, Title, Ready in Minutes, Instructions, dan daftar ingredients. Daftar Ingredients harus terdiri dari name, amount, dan unit"
+					},
+					"response": []
+				},
+				{
+					"name": "Tambah Rating",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rate\": 4\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/resep/rate/{resepId}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"resep",
+								"rate",
+								"{resepId}"
+							]
+						},
+						"description": "Endpoint untuk menambah rating sebuah resep di database.\nData rating dimasukkan pada body dengan ketentuan rating harus berupa integer antara 1-5."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Resep by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/resep/{IdResep}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"resep",
+								"{IdResep}"
+							]
+						},
+						"description": "Endpoints untuk menghapus resep pada DB lokal. Data yang diperlukan berupa ID Resep pada URL end point dan data username dan password admin pada body request. Data yang dikembalikan berupa keterangan apakah proses penghapusan berhasil atau tidak"
+					},
+					"response": []
+				}
+			],
+			"description": "Folder untuk Endpoints yang berhubungan dengan resep.\nDaftar Endpoints antara lain, cari resep, cari resep lokal, cari resep mirip by Id, cari resep acak, Get detail resep by Id, Get daftar bahan by Id resep, Tambah resep, Tambah Rating dan hapus resep",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f56ea7da-b1e7-4612-845c-17aaeed08f97",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4fe4ab8a-4a15-4aa7-8745-c6392d54e753",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8c8012b1-ad79-4ff7-9902-9eed624a129c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4b52e5ca-44d7-4130-a64a-bec7e2bc7dd5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "d3f66360-aa9e-4ffd-a638-3e7ac2709070",
+			"key": "url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"id": "ace6daa5-f7fc-4812-85f8-c541e81e435d",
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNvbnRyaWJ1dG9yMiIsImxldmVsIjoxLCJpYXQiOjE1NzY3MjM1OTh9.g5aXSNr0rDBM1Wj7GpZnO251pu4PNu5yANcQa94SeQQ",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
